@@ -52,16 +52,16 @@ class AliyunOssArtifactRepository(ArtifactRepository):
         return self.oss_bucket
 
     def log_artifact(self, local_file, artifact_path=None):
-        (_, dest_path) = self.parse_oss_uri(self.artifact_uri)
+        (dest_dir, dest_path) = self.parse_oss_uri(self.artifact_uri)
         if artifact_path:
             dest_path = posixpath.join(dest_path, artifact_path)
         dest_path = posixpath.join(
-            dest_path, os.path.basename(local_file))
+            dest_dir, dest_path, os.path.basename(local_file))
         self._get_oss_bucket(self.oss_bucket_name)
         self.oss_bucket.put_object_from_file(dest_path, local_file)
 
     def log_artifacts(self, local_dir, artifact_path=None):
-        (_, dest_path) = self.parse_oss_uri(self.artifact_uri)
+        (dest_dir, dest_path) = self.parse_oss_uri(self.artifact_uri)
         if artifact_path:
             dest_path = posixpath.join(dest_path, artifact_path)
         self._get_oss_bucket(self.oss_bucket_name)
@@ -71,14 +71,14 @@ class AliyunOssArtifactRepository(ArtifactRepository):
             if root != local_dir:
                 rel_path = os.path.relpath(root, local_dir)
                 rel_path = relative_path_to_artifact_path(rel_path)
-                upload_path = posixpath.join(dest_path, rel_path)
+                upload_path = posixpath.join(dest_dir, dest_path, rel_path)
             for f in filenames:
                 self.oss_bucket.put_object_from_file(
                         posixpath.join(upload_path, f), os.path.join(root, f))
 
     def list_artifacts(self, path=None):
-        (_, artifact_path) = self.parse_oss_uri(self.artifact_uri)
-        dest_path = artifact_path
+        (dest_dir, artifact_path) = self.parse_oss_uri(self.artifact_uri)
+        dest_path = posixpath.join(dest_dir, artifact_path)
         if path:
             dest_path = posixpath.join(dest_path, path)
         infos = []
@@ -113,8 +113,8 @@ class AliyunOssArtifactRepository(ArtifactRepository):
                     artifact_path=artifact_path, object_path=listed_object_path))
 
     def _download_file(self, remote_file_path, local_path):
-        (_, oss_root_path) = self.parse_oss_uri(self.artifact_uri)
-        oss_full_path = posixpath.join(oss_root_path, remote_file_path)
+        (dest_dir, oss_root_path) = self.parse_oss_uri(self.artifact_uri)
+        oss_full_path = posixpath.join(dest_dir, oss_root_path, remote_file_path)
         self._get_oss_bucket(self.oss_bucket_name)
         self.oss_bucket.get_object_to_file(oss_full_path, local_path)
 
