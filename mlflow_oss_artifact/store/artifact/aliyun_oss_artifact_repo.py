@@ -71,10 +71,10 @@ class AliyunOssArtifactRepository(ArtifactRepository):
             if root != local_dir:
                 rel_path = os.path.relpath(root, local_dir)
                 rel_path = relative_path_to_artifact_path(rel_path)
-                upload_path = posixpath.join(dest_dir, dest_path, rel_path)
+                upload_path = posixpath.join(dest_path, rel_path)
             for f in filenames:
                 self.oss_bucket.put_object_from_file(
-                        posixpath.join(upload_path, f), os.path.join(root, f))
+                        posixpath.join(dest_dir, upload_path, f), os.path.join(root, f))
 
     def list_artifacts(self, path=None):
         (dest_dir, artifact_path) = self.parse_oss_uri(self.artifact_uri)
