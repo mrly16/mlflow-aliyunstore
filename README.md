@@ -33,7 +33,7 @@ class Mod(mlflow.pyfunc.PythonModel):
         return 7
 
 exp_name = "myexp"
-mlflow.create_experiment(exp_name, artifact_location="oss://mlflow/")
+mlflow.create_experiment(exp_name, artifact_location="oss://mlflow-test/")
 mlflow.set_experiment(exp_name)
 mlflow.pyfunc.log_model('model_test', python_model=Mod())
 ```
