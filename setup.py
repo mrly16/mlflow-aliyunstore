@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='mlflow-oss-artifact',
-    version='1.0.0',
+    name='mlflow_oss_artifact',
+    version='2.0.1',
     description='Plugin that provides Aliyun oss Artifact Store functionality for MLflow',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Liangyi Murong',
     author_email='mrly@xkool.org',
-    url="https://github.com/mrly16/mlflow-aliyunstore",
+    url="https://github.com/mrly16/mlflow-aliyunstore/archive/refs/tags/2.0.1.tar.gz",
     packages=find_packages(),
     install_requires=[
         'mlflow',
@@ -19,7 +19,7 @@ setup(
     ],
     entry_points={
         "mlflow.artifact_repository": [
-            "oss=mlflow-oss-artifact.store.artifact.aliyun_oss_artifact_repo:AliyunOssArtifactRepository"
+            "oss=mlflow_oss_artifact.store.artifact.aliyun_oss_artifact_repo:AliyunOssArtifactRepository"
         ]
     },
     license="Apache License 2.0",

@@ -8,7 +8,7 @@ This repository provides a MLflow plugin that allows users to use Aliyun OSS as 
 Pip install the package on both your client and the server
 
 ```bash
-pip install mlflow-oss-artifact
+pip install mlflow_oss_artifact
 ```
 
 Configure environment variables in your OS for Aliyun OSS authentication
