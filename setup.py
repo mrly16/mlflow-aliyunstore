@@ -19,7 +19,7 @@ setup(
     ],
     entry_points={
         "mlflow.artifact_repository": [
-            "oss=aliyunstoreplugin.store.artifact.aliyun_oss_artifact_repo:AliyunOssArtifactRepository"
+            "oss=mlflow-oss-artifact.store.artifact.aliyun_oss_artifact_repo:AliyunOssArtifactRepository"
         ]
     },
     license="Apache License 2.0",
