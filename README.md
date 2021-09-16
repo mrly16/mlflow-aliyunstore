@@ -1,32 +1,28 @@
-# Aliyun OSS store plugin for MLflow
-This repository provides a MLflow plugin that allows users to use a aliyun oss as the artifact store for MLflow.
+# Xkool Aliyun OSS store plugin for MLflow
+_Forked and modified from SeaOfOcean at https://github.com/SeaOfOcean/mlflow-aliyunstore_
 
-## Implementation overview
-* `aliyunstoreplugin`: this package includes the `AliyunOssArtifactRepository` class that is used to read and write artifacts from Aliyun OSS storage.
-* `setup.py` file defines entrypoints that tell MLflow to automatically associate the `oss` URIs with the `AliyunOssArtifactRepository` implementation when the `aliyunstoreplugin` library is installed. The entrypoints are configured as follows:
-
-```
-entry_points={
-        "mlflow.artifact_repository": [
-            "oss=aliyunstoreplugin.store.artifact.aliyun_oss_artifact_repo:AliyunOssArtifactRepository"
-        ]
-    },
-```
-
+This repository provides a MLflow plugin that allows users to use Aliyun OSS as the artifact store for MLflow.
 
 # Usage
 
-Install by pip on both your client and the server, and then use MLflow as normal. The Alibaba Cloud OSS artifact store support will be provided automatically.
+Pip install the package on both your client and the server
 
 ```bash
-pip install mlflow[aliyun-oss]
+pip install mlflow-oss-artifact
 ```
 
+Configure environment variables in your OS for Aliyun OSS authentication
 
-The plugin implements all of the MLflow artifact store APIs.
-It expects Aliyun Storage access credentials in the ``MLFLOW_OSS_ENDPOINT_URL``, ``MLFLOW_OSS_KEY_ID`` and ``MLFLOW_OSS_KEY_SECRET`` environment variables,
-so you must set these variables on both your client application and your MLflow tracking server.
-To use Aliyun OSS as an artifact store, an OSS URI of the form ``oss://<bucket>/<path>`` must be provided, as shown in the example below:
+Note: checkout [this post](https://unix.stackexchange.com/a/117470) on stackoverflow to make them permanent if necessary
+
+```bash
+export MLFLOW_OSS_ENDPOINT_URL=<oss-xx-cityname.aliyuncs.com>
+export MLFLOW_OSS_KEY_ID=<your_oss_key_id>
+export MLFLOW_OSS_KEY_SECRET=<your_oss_key_secret>
+export MLFLOW_OSS_BUCKET_NAME=<your_bucket_name>
+```
+
+To use To use Aliyun OSS as an artifact store, an OSS URI of the form ``oss://<path>`` must be provided, as shown in the example below:
 
 ```python
 import mlflow
@@ -37,7 +33,7 @@ class Mod(mlflow.pyfunc.PythonModel):
         return 7
 
 exp_name = "myexp"
-mlflow.create_experiment(exp_name, artifact_location="oss://mlflow-test/")
+mlflow.create_experiment(exp_name, artifact_location="oss://mlflow/")
 mlflow.set_experiment(exp_name)
 mlflow.pyfunc.log_model('model_test', python_model=Mod())
 ```

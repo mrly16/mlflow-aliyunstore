@@ -4,9 +4,9 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='xk_mlflow_oss_plugin',
+    name='mlflow-oss-artifact',
     version='1.0.0',
-    description='Plugin that provides Aliyun oss Artifact Store functionality for MLflow in Xkool',
+    description='Plugin that provides Aliyun oss Artifact Store functionality for MLflow',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Liangyi Murong',
